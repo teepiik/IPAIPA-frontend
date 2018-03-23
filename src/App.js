@@ -1,18 +1,73 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import beerService from './services/beerService'
+import Beer from './components/Beer'
+import BeerForm from './components/BeerForm'
 
-class App extends Component {
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      beers: [],
+      newBeerName: '',
+      newBeerType: '',
+      error: '',
+      message: ''
+    }
+  }
+
+  componentWillMount = async () => {
+    const getBeers = await beerService.getAll()
+    this.setState({ beers: getBeers })
+
+  }
+
+  handleFieldChanges = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
+  addBeer = async (event) => {
+    event.preventDefault()
+    const beerObject = {
+      name: this.state.newBeerName,
+      type: this.state.newBeerType
+    }
+
+    const addedBeer = await beerService.create(beerObject)
+    this.setState({
+      beers: this.state.beers.concat(addedBeer),
+      newBeerName: '',
+      newBeerType: ''
+    })
+  }
+
   render() {
+
+    const beersToShow = this.state.beers
+
+    const beerForm = () => (
+      <BeerForm
+        onSubmit={this.addBeer}
+        handleChange={this.handleFieldChanges}
+        newBeerName={this.state.newBeerName}
+        newBeerType={this.state.newBeerType} />
+    )
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h1>Beers</h1>
+        <div>
+          <ul>
+            {beersToShow.map(beer =>
+              <Beer
+                key={beer.id}
+                beerName={beer.name}
+                beerType={beer.type}
+              />)}
+          </ul>
+        </div>
+        {beerForm()}
+
       </div>
     );
   }
