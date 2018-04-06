@@ -1,11 +1,10 @@
 import React from 'react'
 
-const Beer = ({ beer }) => {
-    return (
-        <li className="beer">
+const Beer = ({ beer }) => (
+        <div className="beer">
             <p>name: {beer.name}, type: {beer.type}</p>
-        </li>
+        </div>
     )
-}
+
 
 export default Beer

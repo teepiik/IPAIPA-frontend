@@ -59,11 +59,7 @@ class App extends React.Component {
         <div>
           <ul>
             {beersToShow.map(beer =>
-              <Beer
-                key={beer.id}
-                beerName={beer.name}
-                beerType={beer.type}
-              />)}
+              <Beer beer={beer} />)}
           </ul>
         </div>
         {beerForm()}
