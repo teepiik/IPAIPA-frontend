@@ -11,6 +11,9 @@ class App extends React.Component {
       beers: [],
       newBeerName: '',
       newBeerType: '',
+      newBeerCountry: '',
+      newBeerPercent: '',
+      newBeerBrewery: '',
       error: '',
       message: ''
     }
@@ -30,14 +33,20 @@ class App extends React.Component {
     event.preventDefault()
     const beerObject = {
       name: this.state.newBeerName,
-      type: this.state.newBeerType
+      type: this.state.newBeerType,
+      country: this.state.newBeerCountry,
+      alcohol_percent: this.state.newBeerPercent,
+      brewery: this.state.newBeerBrewery
     }
 
     const addedBeer = await beerService.create(beerObject)
     this.setState({
       beers: this.state.beers.concat(addedBeer),
       newBeerName: '',
-      newBeerType: ''
+      newBeerType: '',
+      newBeerCountry: '',
+      newBeerBrewery: '',
+      newBeerPercent: ''
     })
   }
 
@@ -50,7 +59,10 @@ class App extends React.Component {
         onSubmit={this.addBeer}
         handleChange={this.handleFieldChanges}
         newBeerName={this.state.newBeerName}
-        newBeerType={this.state.newBeerType} />
+        newBeerType={this.state.newBeerType}
+        newBeerPercent={this.state.newBeerPercent}
+        newBeerCountry={this.state.newBeerCountry}
+        newBeerBrewery={this.state.newBeerBrewer} />
     )
 
     return (

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BeerForm = ({ onSubmit, handleChange, newBeerName, newBeerType }) => {
+const BeerForm = ({ onSubmit, handleChange, newBeerName, newBeerType, newBeerCountry, newBeerBrewery, newBeerPercent }) => {
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -21,6 +21,36 @@ const BeerForm = ({ onSubmit, handleChange, newBeerName, newBeerType }) => {
                         type="text"
                         name="newBeerType"
                         value={newBeerType}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div>
+                    brewery
+                    <input
+                        type="text"
+                        name="newBeerBrewery"
+                        value={newBeerBrewery}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div>
+                    country
+                    <input
+                        type="text"
+                        name="newBeerCountry"
+                        value={newBeerCountry}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div>
+                    alcohol percent
+                    <input
+                        type="text"
+                        name="newBeerPercent"
+                        value={newBeerPercent}
                         onChange={handleChange}
                     />
                 </div>
