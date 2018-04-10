@@ -2,6 +2,10 @@ import React from 'react'
 import beerService from './services/beerService'
 import Beer from './components/Beer'
 import BeerForm from './components/BeerForm'
+import Menu from './components/Menu'
+import Notification from './components/Notification'
+import Frontpage from './components/Frontpage'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 
 class App extends React.Component {
@@ -67,15 +71,13 @@ class App extends React.Component {
 
     return (
       <div>
-        <h1>Beers</h1>
-        <div>
-          <ul>
-            {beersToShow.map(beer =>
-              <Beer beer={beer} />)}
-          </ul>
-        </div>
-        {beerForm()}
-
+        <Router>
+          <div className="container">
+            <Menu />
+            <Notification message={this.state.message} />
+            <Route exact path="/" render={() => <Frontpage />} />
+          </div>
+        </Router>
       </div>
     );
   }
