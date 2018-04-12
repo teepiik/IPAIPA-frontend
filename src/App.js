@@ -5,7 +5,8 @@ import BeerForm from './components/BeerForm'
 import Menu from './components/Menu'
 import Notification from './components/Notification'
 import Frontpage from './components/Frontpage'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import BeerListing from './components/BeerListing';
 
 
 class App extends React.Component {
@@ -24,8 +25,12 @@ class App extends React.Component {
   }
 
   componentWillMount = async () => {
+    // ei tule oikeassa muodossa arrayna, keksi fix
+    
     const getBeers = await beerService.getAll()
+    console.log(getBeers)
     this.setState({ beers: getBeers })
+    console.log(this.state.beers)
 
   }
 
@@ -76,6 +81,7 @@ class App extends React.Component {
             <Menu />
             <Notification message={this.state.message} />
             <Route exact path="/" render={() => <Frontpage />} />
+            <Route exact path="/beers" render={() => <BeerListing state={this.state} />} />
           </div>
         </Router>
       </div>
