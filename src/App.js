@@ -24,14 +24,11 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount = async () => {
-    // ei tule oikeassa muodossa arrayna, keksi fix
-    
+  componentWillMount = async () => {  
+    console.log('mounting')
     const getBeers = await beerService.getAll()
-    console.log(getBeers)
     this.setState({ beers: getBeers })
-    console.log(this.state.beers)
-
+    console.log('bisset states')
   }
 
   handleFieldChanges = (event) => {
@@ -61,8 +58,6 @@ class App extends React.Component {
 
   render() {
 
-    const beersToShow = this.state.beers
-
     const beerForm = () => (
       <BeerForm
         onSubmit={this.addBeer}
@@ -73,6 +68,7 @@ class App extends React.Component {
         newBeerCountry={this.state.newBeerCountry}
         newBeerBrewery={this.state.newBeerBrewer} />
     )
+    console.log(this.state.beers)
 
     return (
       <div>
@@ -81,7 +77,7 @@ class App extends React.Component {
             <Menu />
             <Notification message={this.state.message} />
             <Route exact path="/" render={() => <Frontpage />} />
-            <Route exact path="/beers" render={() => <BeerListing state={this.state} />} />
+            <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
           </div>
         </Router>
       </div>
