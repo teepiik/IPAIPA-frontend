@@ -8,7 +8,6 @@ import Frontpage from './components/Frontpage'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BeerListing from './components/BeerListing';
 
-
 class App extends React.Component {
   constructor() {
     super()
@@ -36,40 +35,21 @@ class App extends React.Component {
   }
 
   addBeer = async (event) => {
-    event.preventDefault()
-    const beerObject = {
-      name: this.state.newBeerName,
-      type: this.state.newBeerType,
-      country: this.state.newBeerCountry,
-      alcohol_percent: this.state.newBeerPercent,
-      brewery: this.state.newBeerBrewery
-    }
 
-    const addedBeer = await beerService.create(beerObject)
+    // needs to get the beerObject as an argument, not working now
+    const addedBeer = await beerService.create(this.beerObject)
     this.setState({
       beers: this.state.beers.concat(addedBeer),
-      newBeerName: '',
-      newBeerType: '',
-      newBeerCountry: '',
-      newBeerBrewery: '',
-      newBeerPercent: ''
+      message: `you created: ${addedBeer.name}`
     })
+    setTimeout(() => {
+      this.setState({ message: '' })
+    }, 5000)
   }
 
+  beerByid = (id) => this.state.beers.find(b => b.id === id)
+
   render() {
-
-    const beerForm = () => (
-      <BeerForm
-        onSubmit={this.addBeer}
-        handleChange={this.handleFieldChanges}
-        newBeerName={this.state.newBeerName}
-        newBeerType={this.state.newBeerType}
-        newBeerPercent={this.state.newBeerPercent}
-        newBeerCountry={this.state.newBeerCountry}
-        newBeerBrewery={this.state.newBeerBrewer} />
-    )
-    console.log(this.state.beers)
-
     return (
       <div>
         <Router>
@@ -77,7 +57,9 @@ class App extends React.Component {
             <Menu />
             <Notification message={this.state.message} />
             <Route exact path="/" render={() => <Frontpage />} />
+            <Route exact path="/createbeer" render={({ history }) => <BeerForm history={history} addBeer={this.addBeer} />} />
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
+            <Route exact path="/beers/:id" render={({match}) => <Beer beer={this.beerByid(match.params.id)} />} />
           </div>
         </Router>
       </div>
