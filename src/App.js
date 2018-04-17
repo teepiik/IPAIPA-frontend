@@ -34,10 +34,8 @@ class App extends React.Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  addBeer = async (event) => {
-
-    // needs to get the beerObject as an argument, not working now
-    const addedBeer = await beerService.create(this.beerObject)
+  addBeer = async (beer) => {
+    const addedBeer = await beerService.create(beer)
     this.setState({
       beers: this.state.beers.concat(addedBeer),
       message: `you created: ${addedBeer.name}`

@@ -20,16 +20,13 @@ class BeerForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-
-        const beerObject = {
+        this.props.addBeer({
             name: this.state.name,
             brewery: this.state.brewery,
             country: this.state.country,
             type: this.state.type,
             alcohol_percent: this.state.alcohol_percent
-        }
-
-        this.props.addBeer(beerObject)
+        })
         this.props.history.push('/')
     }
 
