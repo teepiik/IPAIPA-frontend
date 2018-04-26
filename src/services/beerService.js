@@ -17,8 +17,15 @@ const update = async (id, newObject) => {
 }
 
 const destroy = async (id) => {
+    console.log('destroy called')
+    console.log(id)
     const response = await axios.delete(`${baseUrl}/${id}`)
     return response.data
 }
 
-export default { getAll, create, update, destroy }
+const getOne = async (id) => {
+    const response = await axios.get(`${baseUrl}/${id}`)
+    return response.data
+}
+
+export default { getAll, create, update, destroy, getOne }

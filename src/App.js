@@ -5,7 +5,7 @@ import BeerForm from './components/BeerForm'
 import Menu from './components/Menu'
 import Notification from './components/Notification'
 import Frontpage from './components/Frontpage'
-import { BrowserRouter as Router, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BeerListing from './components/BeerListing';
 
 class App extends React.Component {
@@ -23,7 +23,7 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount = async () => {  
+  componentWillMount = async () => {
     console.log('mounting')
     const getBeers = await beerService.getAll()
     this.setState({ beers: getBeers })
@@ -45,13 +45,14 @@ class App extends React.Component {
     }, 5000)
   }
 
-  handleDelete = async (event, beer) => {
+  deleteBeer = async (beer) => {
+    console.log('deleteBeer')
+    console.log(beer)
     const result = window.confirm('Are you sure to delete this?')
-    if(result) {
-      console.log(beer)
-      await beerService.destroy(beer.id)
+    if (result) {
+      const deletedBeer = await beerService.destroy(beer.id)
       this.setState({
-        beers: this.state.beers.filter(b => b.id.toString() !== beer.id),
+        beers: this.state.beers.filter(b => b.id.toString() !== deletedBeer.id),
         message: `Successful deletion`
       })
       setTimeout(() => {
@@ -60,10 +61,7 @@ class App extends React.Component {
     }
   }
 
-  
-
   render() {
-    const beerByid = (id) => this.state.beers.find(b => b.id === id)
 
     return (
       <div>
@@ -74,7 +72,7 @@ class App extends React.Component {
             <Route exact path="/" render={() => <Frontpage />} />
             <Route path="/createbeer" render={({ history }) => <BeerForm history={history} addBeer={this.addBeer} />} />
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
-            <Route exact path="/beers/:id" render={({match}) => <Beer beer={beerByid(match.params.id)} handleDelete={this.handleDelete} />} />
+            <Route exact path="/beers/:id" render={({ match }) => <Beer beerId={match.params.id} deleteBeer={this.deleteBeer} />} />
           </div>
         </Router>
       </div>
