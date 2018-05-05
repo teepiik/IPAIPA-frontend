@@ -6,7 +6,8 @@ import Menu from './components/Menu'
 import Notification from './components/Notification'
 import Frontpage from './components/Frontpage'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import BeerListing from './components/BeerListing';
+import BeerListing from './components/BeerListing'
+import { Link } from 'react-router-dom'
 
 class App extends React.Component {
   constructor() {
@@ -24,10 +25,8 @@ class App extends React.Component {
   }
 
   componentWillMount = async () => {
-    console.log('mounting')
     const getBeers = await beerService.getAll()
     this.setState({ beers: getBeers })
-    console.log('bisset states')
   }
 
   handleFieldChanges = (event) => {
@@ -46,13 +45,11 @@ class App extends React.Component {
   }
 
   deleteBeer = async (beer) => {
-    console.log('deleteBeer')
-    console.log(beer)
     const result = window.confirm('Are you sure to delete this?')
     if (result) {
-      const deletedBeer = await beerService.destroy(beer.id)
+      await beerService.destroy(beer.id)
       this.setState({
-        beers: this.state.beers.filter(b => b.id.toString() !== deletedBeer.id),
+        beers: this.state.beers.filter(b => b.id.toString() !== beer.id),
         message: `Successful deletion`
       })
       setTimeout(() => {
@@ -69,10 +66,11 @@ class App extends React.Component {
           <div className="container">
             <Menu />
             <Notification message={this.state.message} />
+            <div> <Link to={`/createbeer`}>Add new beer</Link></div>
             <Route exact path="/" render={() => <Frontpage />} />
             <Route path="/createbeer" render={({ history }) => <BeerForm history={history} addBeer={this.addBeer} />} />
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
-            <Route exact path="/beers/:id" render={({ match }) => <Beer beerId={match.params.id} deleteBeer={this.deleteBeer} />} />
+            <Route exact path="/beers/:id" render={({ match, history }) => <Beer beerId={match.params.id} history={history} deleteBeer={this.deleteBeer} />} />
           </div>
         </Router>
       </div>

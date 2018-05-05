@@ -11,28 +11,28 @@ class Beer extends React.Component {
         }
     }
 
-    componentWillMount = async () => {
-        const beer = this.getBeerById(this.props.beerId)
+    // willMount wont re-render with async calls
+    componentDidMount = async () => {
+        const beer = await this.getBeerById(this.props.beerId)
         this.setState({ beer: beer })
     }
 
     getBeerById = async (id) => {
-        console.log('beerservice id')
-        console.log(id)
         const beer = await beerService.getOne(id)
-        console.log('getBeerById')
-        console.log(beer) // toimii tänne
         return beer
     }
     render() {
-
-        const handleDelete = async (event) => {
-            console.log('handleDelete')
-            console.log(this.state.beer)
-            await this.props.deleteBeer(this.state.beer)
+        // this gives time for async getBeer call
+        if(this.state.beer === null) {
+            return (
+                <div></div>
+            )
         }
 
-        // bisse ei ehdi latautua, promise pending
+        const handleDelete = async (event) => {
+            await this.props.deleteBeer(this.state.beer)
+            this.props.history.push('/beers')
+        }
 
         return (
             <div className="beer">

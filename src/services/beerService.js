@@ -17,8 +17,6 @@ const update = async (id, newObject) => {
 }
 
 const destroy = async (id) => {
-    console.log('destroy called')
-    console.log(id)
     const response = await axios.delete(`${baseUrl}/${id}`)
     return response.data
 }
