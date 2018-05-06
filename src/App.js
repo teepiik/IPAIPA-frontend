@@ -8,6 +8,7 @@ import Frontpage from './components/Frontpage'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BeerListing from './components/BeerListing'
 import { Link } from 'react-router-dom'
+import EditBeerForm from './components/EditBeerForm';
 
 class App extends React.Component {
   constructor() {
@@ -24,7 +25,7 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     const getBeers = await beerService.getAll()
     this.setState({ beers: getBeers })
   }
@@ -38,6 +39,18 @@ class App extends React.Component {
     this.setState({
       beers: this.state.beers.concat(addedBeer),
       message: `you created: ${addedBeer.name}`
+    })
+    setTimeout(() => {
+      this.setState({ message: '' })
+    }, 5000)
+  }
+
+  // beerlisting is faster than this, after edit wont show edited. FIX
+  editBeer = async (beerId, beer) => {
+    const editedBeer = await beerService.update(beerId, beer)
+    this.setState({
+      beers: this.state.beers.map(b => b.id !== beerId ? b : this.editedBeer),
+      message: `you edited: ${editedBeer.name}`
     })
     setTimeout(() => {
       this.setState({ message: '' })
@@ -71,6 +84,7 @@ class App extends React.Component {
             <Route path="/createbeer" render={({ history }) => <BeerForm history={history} addBeer={this.addBeer} />} />
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
             <Route exact path="/beers/:id" render={({ match, history }) => <Beer beerId={match.params.id} history={history} deleteBeer={this.deleteBeer} />} />
+            <Route exact path="/beers/:id/edit" render={({ match, history }) => <EditBeerForm beerId={match.params.id} editBeer={this.editBeer} history={history} />} />
           </div>
         </Router>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import beerService from '../services/beerService'
-
 
 class Beer extends React.Component {
     constructor() {
@@ -21,6 +21,7 @@ class Beer extends React.Component {
         const beer = await beerService.getOne(id)
         return beer
     }
+
     render() {
         // this gives time for async getBeer call
         if(this.state.beer === null) {
@@ -34,6 +35,8 @@ class Beer extends React.Component {
             this.props.history.push('/beers')
         }
 
+        // make button for edit, then redirect 
+
         return (
             <div className="beer">
                 <h3>{this.state.beer.name}</h3>
@@ -41,6 +44,7 @@ class Beer extends React.Component {
                 <p>brewery: {this.state.beer.brewery}, country of origin: {this.state.beer.country}</p>
 
                 <Button bsStyle="success" onClick={handleDelete}>delete</Button>
+                <div> <Link to={`/beers/${this.state.beer.id}/edit`}>Edit</Link></div>
 
             </div>
         )

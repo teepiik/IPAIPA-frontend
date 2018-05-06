@@ -4,11 +4,12 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 const BeerListing = (beers) => {
 // beers.beers to get to the array named beers
+
     return (
         <div>
             <h2>Beers</h2>
             <ListGroup>
-                {beers.beers.map(beer =>
+                {beers.beers.map(beer => beer === undefined ? null :
                     <ListGroupItem key={beer.id}>
                         <Link to={`/beers/${beer.id}`}>{beer.name} ({beer.brewery}, {beer.country})</Link>
                     </ListGroupItem>)}
