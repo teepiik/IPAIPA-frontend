@@ -45,11 +45,10 @@ class App extends React.Component {
     }, 5000)
   }
 
-  // beerlisting is faster than this, after edit wont show edited. FIX
   editBeer = async (beerId, beer) => {
     const editedBeer = await beerService.update(beerId, beer)
     this.setState({
-      beers: this.state.beers.map(b => b.id !== beerId ? b : this.editedBeer),
+      beers: this.state.beers.map(b => b.id !== beerId ? b : editedBeer),
       message: `you edited: ${editedBeer.name}`
     })
     setTimeout(() => {
