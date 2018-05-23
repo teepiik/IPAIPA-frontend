@@ -36,7 +36,7 @@ class App extends React.Component {
     this.setState({ beers: getBeers })
 
     const loggedInUser = window.localStorage.getItem('LoggedUser')
-    if(loggedInUser !== null) {
+    if (loggedInUser !== null) {
       const parsedUser = JSON.parse(loggedInUser)
       const newToken = {
         token: parsedUser.token
@@ -51,6 +51,18 @@ class App extends React.Component {
 
   handleFieldChanges = (event) => {
     this.setState({ [event.target.name]: event.target.value })
+  }
+
+  handleLogout = () => {
+    console.log('handlelogout called')
+    window.localStorage.removeItem('loggedUser')
+    this.setState({
+      user: null,
+      message: 'Logged out'
+    })
+    setTimeout(() => {
+      this.setState({ message: '' })
+    }, 5000)
   }
 
   addBeer = async (beer) => {
@@ -95,6 +107,13 @@ class App extends React.Component {
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       beerService.setToken(user.token)
       userService.setToken(user.token)
+      this.setState({
+        user: user,
+        message: 'Logged in'
+      })
+      setTimeout(() => {
+        this.setState({ message: '' })
+      }, 5000)
 
     } catch (error) {
 
@@ -107,7 +126,7 @@ class App extends React.Component {
       <div>
         <Router>
           <div className="container">
-            <Menu />
+            <Menu logout={this.handleLogout} />
             <Notification message={this.state.message} />
             <div> <Link to={`/createbeer`}>Add new beer</Link></div>
             <Route exact path="/" render={() => <Frontpage />} />

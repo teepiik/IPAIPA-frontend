@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Navbar } from 'react-bootstrap'
+import { Navbar, Button } from 'react-bootstrap'
 
-const Menu = () => {
+const Menu = (props) => {
+const handleLogout = props.handleLogout
+
     return (
         <Navbar inverse collapseOnSelect>
             <Navbar.Header>
@@ -11,6 +13,9 @@ const Menu = () => {
                 </Navbar.Brand>
                 <Navbar.Brand>
                     <Link to="/beers">Beers</Link>
+                </Navbar.Brand>
+                <Navbar.Brand>
+                    <Button onClick={handleLogout}>Logout</Button>
                 </Navbar.Brand>
                 <Navbar.Toggle />
             </Navbar.Header>

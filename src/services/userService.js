@@ -10,7 +10,7 @@ const setToken = (props) => {
 
 const config = () => {
     return {
-        headers: { 'Authorization': token}
+        headers: { 'authorization': token}
     }
 }
 

@@ -23,6 +23,10 @@ class LoginPage extends React.Component {
             password: this.state.password
         })
         this.props.history.push('/')
+        this.setState({
+            username: '',
+            password: ''
+        })
     }
 
     // TODO change loginform password type to password etc
@@ -48,3 +52,5 @@ class LoginPage extends React.Component {
         )
     }
 }
+
+export default LoginPage
