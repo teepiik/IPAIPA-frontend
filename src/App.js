@@ -1,5 +1,7 @@
 import React from 'react'
 import beerService from './services/beerService'
+import loginService from './services/loginService'
+import userService from './services/userService'
 import Beer from './components/Beer'
 import BeerForm from './components/BeerForm'
 import Menu from './components/Menu'
@@ -7,6 +9,7 @@ import Notification from './components/Notification'
 import Frontpage from './components/Frontpage'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BeerListing from './components/BeerListing'
+import LoginPage from './components/LoginPage'
 import { Link } from 'react-router-dom'
 import EditBeerForm from './components/EditBeerForm';
 
@@ -21,13 +24,29 @@ class App extends React.Component {
       newBeerPercent: '',
       newBeerBrewery: '',
       error: '',
-      message: ''
+      message: '',
+      user: null
     }
   }
+
+  // States tuskin tarvii tässä newBeerParametrei enää?
 
   componentDidMount = async () => {
     const getBeers = await beerService.getAll()
     this.setState({ beers: getBeers })
+
+    const loggedInUser = window.localStorage.getItem('LoggedUser')
+    if(loggedInUser !== null) {
+      const parsedUser = JSON.parse(loggedInUser)
+      const newToken = {
+        token: parsedUser.token
+      }
+      try {
+
+      } catch (error) {
+        // handle logout?
+      }
+    }
   }
 
   handleFieldChanges = (event) => {
@@ -70,6 +89,18 @@ class App extends React.Component {
     }
   }
 
+  login = async (user) => {
+    try {
+      const loggedUser = await loginService.login(user)
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      beerService.setToken(user.token)
+      userService.setToken(user.token)
+
+    } catch (error) {
+
+    }
+  }
+
   render() {
 
     return (
@@ -81,6 +112,7 @@ class App extends React.Component {
             <div> <Link to={`/createbeer`}>Add new beer</Link></div>
             <Route exact path="/" render={() => <Frontpage />} />
             <Route path="/createbeer" render={({ history }) => <BeerForm history={history} addBeer={this.addBeer} />} />
+            <Route path="/login" render={({ history }) => <LoginPage history={history} login={this.login} />} />
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
             <Route exact path="/beers/:id" render={({ match, history }) => <Beer beerId={match.params.id} history={history} deleteBeer={this.deleteBeer} />} />
             <Route exact path="/beers/:id/edit" render={({ match, history }) => <EditBeerForm beerId={match.params.id} editBeer={this.editBeer} history={history} />} />
