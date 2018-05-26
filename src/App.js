@@ -35,17 +35,14 @@ class App extends React.Component {
     const getBeers = await beerService.getAll()
     this.setState({ beers: getBeers })
 
-    const loggedInUser = window.localStorage.getItem('LoggedUser')
-    if (loggedInUser !== null) {
-      const parsedUser = JSON.parse(loggedInUser)
-      const newToken = {
-        token: parsedUser.token
-      }
-      try {
-
-      } catch (error) {
-        // handle logout?
-      }
+    const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      this.setState({ user })
+      beerService.setToken(user.token)
+      userService.setToken(user.token)
+    } else {
+      console.log('something went wrong with windowstorage')
     }
   }
 
@@ -104,7 +101,7 @@ class App extends React.Component {
   login = async (user) => {
     try {
       const loggedUser = await loginService.login(user)
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
       beerService.setToken(user.token)
       userService.setToken(user.token)
       this.setState({

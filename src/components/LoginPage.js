@@ -18,15 +18,19 @@ class LoginPage extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
-        this.props.login({
+        const user = {
             username: this.state.username,
             password: this.state.password
-        })
-        this.props.history.push('/')
+        }
+        
+        this.props.login(user)
         this.setState({
             username: '',
             password: ''
         })
+
+        this.props.history.push('/')
+
     }
 
     // TODO change loginform password type to password etc

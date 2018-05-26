@@ -4,13 +4,13 @@ let token
 
 // do you need update, create, delete?
 
-const setToken = (props) => {
-    token = `bearer ${props.token}`
+const setToken = (token) => {
+    token = `bearer ${token}`
 }
 
 const config = () => {
     return {
-        headers: { 'authorization': token}
+        headers: { 'Authorization': token}
     }
 }
 

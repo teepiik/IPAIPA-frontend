@@ -27,8 +27,8 @@ const getOne = async (id) => {
     return response.data
 }
 
-const setToken = (props) => {
-    token = `bearer ${props.token}`
+const setToken = (token) => {
+    token = `bearer ${token}`
 }
 
 const config = () => {
