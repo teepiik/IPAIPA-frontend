@@ -2,6 +2,16 @@ import axios from 'axios'
 const baseUrl = '/api/beers'
 let token
 
+const setToken = (newtok) => {
+    token = `bearer ${newtok}`
+}
+
+const config = () => {
+    return {
+        headers: { 'Authorization': token}
+    }
+}
+
 const getAll = async () => {
     const response = await axios.get(baseUrl)
     return response.data
@@ -25,16 +35,6 @@ const destroy = async (id) => {
 const getOne = async (id) => {
     const response = await axios.get(`${baseUrl}/${id}`)
     return response.data
-}
-
-const setToken = (token) => {
-    token = `bearer ${token}`
-}
-
-const config = () => {
-    return {
-        headers: { 'authorization': token}
-    }
 }
 
 export default { getAll, create, update, destroy, getOne, setToken }

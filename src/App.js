@@ -102,10 +102,10 @@ class App extends React.Component {
     try {
       const loggedUser = await loginService.login(user)
       window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
-      beerService.setToken(user.token)
-      userService.setToken(user.token)
+      beerService.setToken(loggedUser.token)
+      userService.setToken(loggedUser.token)
       this.setState({
-        user: user,
+        user: loggedUser,
         message: 'Logged in'
       })
       setTimeout(() => {
