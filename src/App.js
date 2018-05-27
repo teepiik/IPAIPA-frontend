@@ -51,8 +51,6 @@ class App extends React.Component {
   }
 
   handleLogout = () => {
-    console.log('handlelogout called')
-    window.localStorage.removeItem('loggedUser')
     this.setState({
       user: null,
       message: 'Logged out'
@@ -123,7 +121,7 @@ class App extends React.Component {
       <div>
         <Router>
           <div className="container">
-            <Menu logout={this.handleLogout} />
+            <Menu logout={this.handleLogout} user={this.state.user} />
             <Notification message={this.state.message} />
             <div> <Link to={`/createbeer`}>Add new beer</Link></div>
             <Route exact path="/" render={() => <Frontpage />} />

@@ -3,24 +3,46 @@ import { Link } from 'react-router-dom'
 import { Navbar, Button } from 'react-bootstrap'
 
 const Menu = (props) => {
-const handleLogout = props.handleLogout
+    const handleLogout = props.logout
 
-    return (
-        <Navbar inverse collapseOnSelect>
-            <Navbar.Header>
-                <Navbar.Brand>
-                    <Link to="/">Frontpage</Link>
-                </Navbar.Brand>
-                <Navbar.Brand>
-                    <Link to="/beers">Beers</Link>
-                </Navbar.Brand>
-                <Navbar.Brand>
-                    <Button onClick={handleLogout}>Logout</Button>
-                </Navbar.Brand>
-                <Navbar.Toggle />
-            </Navbar.Header>
-        </Navbar>
+    if (props.user === null || props.user === undefined || props.user === '') {
 
-    )
+        return (
+            <Navbar inverse collapseOnSelect>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <Link to="/">Frontpage</Link>
+                    </Navbar.Brand>
+                    <Navbar.Brand>
+                        <Link to="/beers">Beers</Link>
+                    </Navbar.Brand>
+                    <Navbar.Brand>
+                        <Link to="/login">Login</Link>
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
+            </Navbar>
+        )
+
+    } else {
+
+        return (
+            <Navbar inverse collapseOnSelect>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <Link to="/">Frontpage</Link>
+                    </Navbar.Brand>
+                    <Navbar.Brand>
+                        <Link to="/beers">Beers</Link>
+                    </Navbar.Brand>
+                    <Navbar.Brand>
+                        <Button bsSize='small' onClick={handleLogout}>Logout</Button>
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
+            </Navbar>
+        )
+    }
 }
+
 export default Menu

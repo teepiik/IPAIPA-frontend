@@ -22,7 +22,7 @@ class LoginPage extends React.Component {
             username: this.state.username,
             password: this.state.password
         }
-        
+
         this.props.login(user)
         this.setState({
             username: '',
@@ -49,7 +49,10 @@ class LoginPage extends React.Component {
                             <ControlLabel> Password:</ControlLabel>
                             <FormControl name='password' value={this.state.password} onChange={this.handleChange} />
                         </div>
-                        <Button bsStyle="success" type="submit">create</Button>
+                        <div>
+
+                        </div>
+                        <Button bsStyle="primary" type="submit">Login</Button>
                     </FormGroup>
                 </form>
             </div>
