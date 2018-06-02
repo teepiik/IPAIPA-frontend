@@ -25,7 +25,7 @@ const Menu = (props) => {
         )
 
     } else {
-
+// change button to react-bootstrap nav onSelect etc
         return (
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
