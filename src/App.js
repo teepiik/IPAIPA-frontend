@@ -71,6 +71,17 @@ class App extends React.Component {
     }, 5000)
   }
 
+  addReview = async (review) => {
+    const madeReview = await reviewService.create(review)
+    // loading beers may be needed to get reviews
+    this.setState({
+      message: 'review completed'
+    })
+    setTimeout(() => {
+      this.setState({ message: '' })
+    }, 5000)
+  }
+
   editBeer = async (beerId, beer) => {
     const editedBeer = await beerService.update(beerId, beer)
     this.setState({
@@ -130,6 +141,7 @@ class App extends React.Component {
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
             <Route exact path="/beers/:id" render={({ match, history }) => <Beer beerId={match.params.id} history={history} deleteBeer={this.deleteBeer} />} />
             <Route exact path="/beers/:id/edit" render={({ match, history }) => <EditBeerForm beerId={match.params.id} editBeer={this.editBeer} history={history} />} />
+            <Route exact path="/beers/:id/make-review" render={({ match, history }) => <ReviewForm beerId={match.params.id} history={history} addReview={this.addReview} user={this.state.user}/>} />
           </div>
         </Router>
       </div>

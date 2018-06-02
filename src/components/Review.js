@@ -20,7 +20,7 @@ class Review extends React.Component {
         const review = await this.getReviewById(this.props.reviewId)
         const beer = await this.getbeerById(review.reviewedBeer)
         const user = await this.getUserById(review.userWhoViewed)
-        
+
         this.setState({
             review: review,
             beer: beer,
@@ -45,9 +45,10 @@ class Review extends React.Component {
 
     render() {
         // this gives time for async getReview call
-        if (this.state.review === null) {
+        if (this.state.review === null ||
+            this.state.user === null || this.state.beer === null) {
             return (
-                <div></div>
+                <div>loading resources</div>
             )
         }
         const handleDelete = async (event) => {
