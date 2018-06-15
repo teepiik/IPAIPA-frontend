@@ -24,4 +24,12 @@ const getOne = async (id) => {
     return response.data
 }
 
-export default { getAll, getOne, setToken }
+// return only id
+const findByUsername = async (username) => {
+    const users = await getAll()
+    let correctUser = 'not found' // check this
+    correctUser = users.find(user => user.username === username)
+    return correctUser.id
+}
+
+export default { getAll, getOne, setToken, findByUsername }

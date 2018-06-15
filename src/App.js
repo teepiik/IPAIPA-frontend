@@ -2,8 +2,10 @@ import React from 'react'
 import beerService from './services/beerService'
 import loginService from './services/loginService'
 import userService from './services/userService'
+import reviewService from './services/reviewService'
 import Beer from './components/Beer'
 import BeerForm from './components/BeerForm'
+import ReviewForm from './components/ReviewForm'
 import Menu from './components/Menu'
 import Notification from './components/Notification'
 import Frontpage from './components/Frontpage'
@@ -141,7 +143,7 @@ class App extends React.Component {
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
             <Route exact path="/beers/:id" render={({ match, history }) => <Beer beerId={match.params.id} history={history} deleteBeer={this.deleteBeer} />} />
             <Route exact path="/beers/:id/edit" render={({ match, history }) => <EditBeerForm beerId={match.params.id} editBeer={this.editBeer} history={history} />} />
-            <Route exact path="/beers/:id/make-review" render={({ match, history }) => <ReviewForm beerId={match.params.id} history={history} addReview={this.addReview} user={this.state.user}/>} />
+            <Route exact path="/beers/:id/review" render={({ match, history }) => <ReviewForm beerId={match.params.id} history={history} addReview={this.addReview} user={this.state.user}/>} />
           </div>
         </Router>
       </div>

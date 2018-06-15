@@ -7,11 +7,12 @@ class ReviewForm extends React.Component {
     constructor() {
         super()
         this.state = {
-            userWhoViewed: this.props.user,
-            reviewedBeer: this.props.beer,
-            overall_grade: null,
-            after_taste: null,
-            first_bite: null,
+            beer: '',
+            userWhoViewed: '',
+            reviewedBeer: '', // just id
+            overall_grade: '',
+            after_taste: '',
+            first_bite: '',
             // not needed date: null,
             comments: ''
         }
@@ -20,25 +21,18 @@ class ReviewForm extends React.Component {
 
     // willMount wont re-render with async calls
     componentDidMount = async () => {
-        const beer = await this.getbeerById(this.props.beerId)
-
-        //const user = await this.getUserById(this.props.userId)
+        console.log(this.props.user)
+        const userId = await userService.findByUsername(this.props.user.username)
+        const beer = await beerService.getOne(this.props.beerId)
         // check some convinient way to get ids
+        
         this.setState({
-            reviewedBeer: beer
-            //userWhoViewed: user
+            beer: beer,
+            reviewedBeer: this.props.beerId,
+            userWhoViewed: userId
         })
     }
-    /*
-        getUserById = async (id) => {
-            const user = await userService.getOne(id)
-            return user
-        }*/
-
-    getBeerById = async (id) => {
-        const beer = await beerService.getOne(id)
-        return beer
-    }
+        
 
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
@@ -46,7 +40,7 @@ class ReviewForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        date = Date()
+        const date = Date()
         this.props.addReview({
             userWhoViewed: this.state.userWhoViewed.id, // only id
             reviewedBeer: this.state.reviewedBeer.id, // only id
@@ -60,20 +54,43 @@ class ReviewForm extends React.Component {
     }
 
     render() {
-        if (this.state.reviewedBeer === null) {
+        if (this.state.reviewedBeer === '') {
             return (
                 <div>loading resources</div>
             )
-        } else if (this.state.userWhoViewed === null) {
+        } else if (this.state.userWhoViewed === '') {
             return (
                 <div>Only login users can do reviews</div>
             )
         }
 
+        // TODO FORM
         return (
             <div>
-                <h2>Make a review of {this.state.reviewedBeer.name}</h2>
+                <h2>Make a review of {this.state.beer.name}</h2>
+                <form onSubmit={this.handleSubmit}>
+                    <FormGroup>
+                        <div>
+                            <ControlLabel>Overall Grade:</ControlLabel>
+                            <FormControl name='overall_grade' value={this.state.overall_grade} onChange={this.handleChange} />
+                        </div>
+                        <div>
+                            <ControlLabel>First bite:</ControlLabel>
+                            <FormControl name='first_bite' value={this.state.first_bite} onChange={this.handleChange} />
+                        </div>
+                        <div>
+                            <ControlLabel>After taste:</ControlLabel>
+                            <FormControl name='after_taste' value={this.state.after_taste} onChange={this.handleChange} />
+                        </div>
+                        <div>
+                            <ControlLabel>Comments:</ControlLabel>
+                            <FormControl name='comments' value={this.state.comments} onChange={this.handleChange} />
+                        </div>
+                        <Button bsStyle="success" type="submit">create</Button>
+                    </FormGroup>
+                </form>
             </div>
         )
     }
 }
+export default ReviewForm

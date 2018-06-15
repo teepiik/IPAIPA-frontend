@@ -45,6 +45,7 @@ class Beer extends React.Component {
 
                 <Button bsStyle="success" onClick={handleDelete}>delete</Button>
                 <div> <Link to={`/beers/${this.state.beer.id}/edit`}>Edit</Link></div>
+                <div> <Link to={`/beers/${this.state.beer.id}/review`}>Make a review</Link></div>
 
             </div>
         )
