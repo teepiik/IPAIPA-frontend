@@ -1,7 +1,8 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import beerService from '../services/beerService'
+import reviewService from '../services/reviewService';
 
 class Beer extends React.Component {
     constructor() {
@@ -14,7 +15,9 @@ class Beer extends React.Component {
     // willMount wont re-render with async calls
     componentDidMount = async () => {
         const beer = await this.getBeerById(this.props.beerId)
-        this.setState({ beer: beer })
+        this.setState({
+            beer: beer
+        })
     }
 
     getBeerById = async (id) => {
@@ -23,8 +26,8 @@ class Beer extends React.Component {
     }
 
     render() {
-        // this gives time for async getBeer call
-        if(this.state.beer === null) {
+        // this gives time for async getBeer and reviews call
+        if (this.state.beer === null || this.state.reviews === null) {
             return (
                 <div></div>
             )
@@ -47,6 +50,16 @@ class Beer extends React.Component {
                 <div> <Link to={`/beers/${this.state.beer.id}/edit`}>Edit</Link></div>
                 <div> <Link to={`/beers/${this.state.beer.id}/review`}>Make a review</Link></div>
 
+                <div>
+                    <h3>Reviews</h3>
+                    <p>Click link to see the review</p>
+                    <ListGroup>
+                        {this.state.beer.reviews.map(review => review === undefined ? null :
+                            <ListGroupItem key={review.id}>
+                               <p>Review given by <Link to={`/reviews/${review.id}`}>{review.usernameOfReviewer}</Link>.</p>
+                            </ListGroupItem>)}
+                    </ListGroup>
+                </div>
             </div>
         )
     }
