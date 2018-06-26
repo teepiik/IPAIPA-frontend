@@ -72,10 +72,9 @@ class App extends React.Component {
       this.setState({ message: '' })
     }, 5000)
   }
-
+  // object review needs to contain .reviewedBeer (id of beer)
   addReview = async (review) => {
-    const madeReview = await reviewService.create(review)
-    // loading beers may be needed to get reviews
+    await reviewService.create(review)
     this.setState({
       message: 'review completed'
     })
@@ -115,6 +114,7 @@ class App extends React.Component {
       window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
       beerService.setToken(loggedUser.token)
       userService.setToken(loggedUser.token)
+      reviewService.setToken(loggedUser.token)
       this.setState({
         user: loggedUser,
         message: 'Logged in'
@@ -124,7 +124,7 @@ class App extends React.Component {
       }, 5000)
 
     } catch (error) {
-
+      console.log(error)
     }
   }
 
@@ -143,7 +143,7 @@ class App extends React.Component {
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
             <Route exact path="/beers/:id" render={({ match, history }) => <Beer beerId={match.params.id} history={history} deleteBeer={this.deleteBeer} />} />
             <Route exact path="/beers/:id/edit" render={({ match, history }) => <EditBeerForm beerId={match.params.id} editBeer={this.editBeer} history={history} />} />
-            <Route exact path="/beers/:id/review" render={({ match, history }) => <ReviewForm beerId={match.params.id} history={history} addReview={this.addReview} user={this.state.user}/>} />
+            <Route exact path="/beers/:id/review" render={({ match, history }) => <ReviewForm beerId={match.params.id} history={history} addReview={this.addReview} user={this.state.user} />} />
           </div>
         </Router>
       </div>

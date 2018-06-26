@@ -43,7 +43,7 @@ class ReviewForm extends React.Component {
         const date = Date()
         this.props.addReview({
             userWhoViewed: this.state.userWhoViewed.id, // only id
-            reviewedBeer: this.state.reviewedBeer.id, // only id
+            reviewedBeer: this.state.reviewedBeer, // only id
             overall_grade: this.overall_grade,
             after_taste: this.state.after_taste,
             first_bite: this.state.first_bite,
@@ -64,7 +64,6 @@ class ReviewForm extends React.Component {
             )
         }
 
-        // TODO FORM
         return (
             <div>
                 <h2>Make a review of {this.state.beer.name}</h2>
