@@ -11,6 +11,8 @@ import Notification from './components/Notification'
 import Frontpage from './components/Frontpage'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BeerListing from './components/BeerListing'
+import UserListing from './components/UserListing'
+import Userpage from './components/Userpage'
 import LoginPage from './components/LoginPage'
 import { Link } from 'react-router-dom'
 import EditBeerForm from './components/EditBeerForm';
@@ -19,15 +21,16 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      beers: [],
+      beers: [],/*
       newBeerName: '',
       newBeerType: '',
       newBeerCountry: '',
       newBeerPercent: '',
-      newBeerBrewery: '',
+      newBeerBrewery: '',*/
       error: '',
       message: '',
-      user: null
+      user: null,
+      users: []
     }
   }
 
@@ -35,7 +38,11 @@ class App extends React.Component {
 
   componentDidMount = async () => {
     const getBeers = await beerService.getAll()
-    this.setState({ beers: getBeers })
+    const getUsers = await userService.getAll()
+    this.setState({
+      beers: getBeers,
+      users: getUsers
+    })
 
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
@@ -137,13 +144,18 @@ class App extends React.Component {
             <Menu logout={this.handleLogout} user={this.state.user} />
             <Notification message={this.state.message} />
             <div> <Link to={`/createbeer`}>Add new beer</Link></div>
+
             <Route exact path="/" render={() => <Frontpage />} />
             <Route path="/createbeer" render={({ history }) => <BeerForm history={history} addBeer={this.addBeer} />} />
             <Route path="/login" render={({ history }) => <LoginPage history={history} login={this.login} />} />
+
             <Route exact path="/beers" render={() => <BeerListing beers={this.state.beers} />} />
             <Route exact path="/beers/:id" render={({ match, history }) => <Beer beerId={match.params.id} history={history} deleteBeer={this.deleteBeer} />} />
             <Route exact path="/beers/:id/edit" render={({ match, history }) => <EditBeerForm beerId={match.params.id} editBeer={this.editBeer} history={history} />} />
             <Route exact path="/beers/:id/review" render={({ match, history }) => <ReviewForm beerId={match.params.id} history={history} addReview={this.addReview} user={this.state.user} />} />
+
+            <Route exact path="/users" render={() => <UserListing users={this.state.users} />} />
+            <Route exact path="/users/:id" render={({ match, history }) => <Userpage userId={match.params.id} history={history} />} />
           </div>
         </Router>
       </div>

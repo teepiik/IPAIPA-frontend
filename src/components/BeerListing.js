@@ -2,14 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
-const BeerListing = (beers) => {
-// beers.beers to get to the array named beers
+const BeerListing = (props) => {
 
     return (
         <div>
             <h2>Beers</h2>
             <ListGroup>
-                {beers.beers.map(beer => beer === undefined ? null :
+                {props.beers.map(beer => beer === undefined ? null :
                     <ListGroupItem key={beer.id}>
                         <Link to={`/beers/${beer.id}`}>{beer.name} ({beer.brewery}, {beer.country})</Link>
                     </ListGroupItem>)}

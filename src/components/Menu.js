@@ -17,6 +17,9 @@ const Menu = (props) => {
                         <Link to="/beers">Beers</Link>
                     </Navbar.Brand>
                     <Navbar.Brand>
+                        <Link to="/users">Users</Link>
+                    </Navbar.Brand>
+                    <Navbar.Brand>
                         <Link to="/login">Login</Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
@@ -34,6 +37,9 @@ const Menu = (props) => {
                     </Navbar.Brand>
                     <Navbar.Brand>
                         <Link to="/beers">Beers</Link>
+                    </Navbar.Brand>
+                    <Navbar.Brand>
+                        <Link to="/users">Users</Link>
                     </Navbar.Brand>
                     <Navbar.Brand>
                         <Button bsSize='small' onClick={handleLogout}>Logout</Button>
