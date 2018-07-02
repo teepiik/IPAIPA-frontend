@@ -10,6 +10,7 @@ class ReviewForm extends React.Component {
             beer: '',
             userWhoViewed: '',
             reviewedBeer: '', // just id
+            reviewedBeerName: '',
             overall_grade: '',
             after_taste: '',
             first_bite: '',
@@ -29,6 +30,7 @@ class ReviewForm extends React.Component {
         this.setState({
             beer: beer,
             reviewedBeer: this.props.beerId,
+            reviewedBeerName: beer.name,
             userWhoViewed: userId
         })
     }
@@ -44,6 +46,7 @@ class ReviewForm extends React.Component {
         this.props.addReview({
             userWhoViewed: this.state.userWhoViewed.id, // only id
             reviewedBeer: this.state.reviewedBeer, // only id
+            reviewedBeerName: this.state.reviewedBeerName,
             overall_grade: this.overall_grade,
             after_taste: this.state.after_taste,
             first_bite: this.state.first_bite,

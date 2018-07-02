@@ -32,4 +32,12 @@ const findByUsername = async (username) => {
     return correctUser.id
 }
 
+const giveTenReviews = () => {
+    // TODO for userpage etc
+}
+
+const giveTenRecommendations = () => {
+    // TODO for userpage etc
+}
+
 export default { getAll, getOne, setToken, findByUsername }

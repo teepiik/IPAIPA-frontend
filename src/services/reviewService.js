@@ -1,4 +1,5 @@
 import axios from 'axios'
+import beerservice from './beerService'
 const baseUrl = '/api/reviews'
 let token
 
@@ -8,7 +9,7 @@ const setToken = (newtok) => {
 
 const config = () => {
     return {
-        headers: { 'Authorization': token}
+        headers: { 'Authorization': token }
     }
 }
 
@@ -37,4 +38,10 @@ const getOne = async (id) => {
     return response.data
 }
 
-export default { getAll, create, update, destroy, getOne, setToken }
+const giveNameOfTheBeerReviewed = async (reviewId) => {
+    const review = await axios.get(`${baseUrl}/${reviewId}`)
+    const reviewedBeerObject = await beerservice.getOne(review.reviewedBeer)
+    return reviewedBeerObject.name
+}
+
+export default { getAll, create, update, destroy, getOne, setToken, giveNameOfTheBeerReviewed }

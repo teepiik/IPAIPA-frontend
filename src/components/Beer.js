@@ -22,6 +22,8 @@ class Beer extends React.Component {
 
     getBeerById = async (id) => {
         const beer = await beerService.getOne(id)
+        console.log('get')
+        console.log(beer)
         return beer
     }
 
@@ -41,7 +43,9 @@ class Beer extends React.Component {
         // make button for edit, then redirect 
 
         return (
+
             <div className="beer">
+                {console.log(this.state.beer)}
                 <h3>{this.state.beer.name}</h3>
                 <p>type: {this.state.beer.type}, alcohol%: {this.state.beer.alcohol_percent}</p>
                 <p>brewery: {this.state.beer.brewery}, country of origin: {this.state.beer.country}</p>
@@ -55,8 +59,8 @@ class Beer extends React.Component {
                     <p>Click link to see the review</p>
                     <ListGroup>
                         {this.state.beer.reviews.map(review => review === undefined ? null :
-                            <ListGroupItem key={review.id}>
-                               <p>Review given by <Link to={`/reviews/${review.id}`}>{review.usernameOfReviewer}</Link>.</p>
+                            <ListGroupItem key={review._id}>
+                                <p>Review given by <Link to={`/reviews/${review._id}`}>{review.usernameOfReviewer}</Link>.</p>
                             </ListGroupItem>)}
                     </ListGroup>
                 </div>

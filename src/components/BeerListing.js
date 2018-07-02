@@ -10,7 +10,7 @@ const BeerListing = (props) => {
             <ListGroup>
                 {props.beers.map(beer => beer === undefined ? null :
                     <ListGroupItem key={beer.id}>
-                        <Link to={`/beers/${beer.id}`}>{beer.name} ({beer.brewery}, {beer.country})</Link>
+                        <Link to={`/beers/${beer.id}`}>{beer.name} ({beer.type}, {beer.brewery}, {beer.country})</Link>
                     </ListGroupItem>)}
             </ListGroup>
         </div>
