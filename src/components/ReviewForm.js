@@ -14,7 +14,6 @@ class ReviewForm extends React.Component {
             overall_grade: '',
             after_taste: '',
             first_bite: '',
-            // not needed date: null,
             comments: ''
         }
     }
@@ -25,7 +24,6 @@ class ReviewForm extends React.Component {
         console.log(this.props.user)
         const userId = await userService.findByUsername(this.props.user.username)
         const beer = await beerService.getOne(this.props.beerId)
-        // check some convinient way to get ids
         
         this.setState({
             beer: beer,
@@ -42,7 +40,8 @@ class ReviewForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const date = Date()
+        const date = new Date()
+        const parsedDateAsString = `${date.getDay()}.${date.getMonth()}.${date.getFullYear()}`
         this.props.addReview({
             userWhoViewed: this.state.userWhoViewed.id, // only id
             reviewedBeer: this.state.reviewedBeer, // only id
@@ -50,7 +49,7 @@ class ReviewForm extends React.Component {
             overall_grade: this.overall_grade,
             after_taste: this.state.after_taste,
             first_bite: this.state.first_bite,
-            date: date,
+            date: parsedDateAsString,
             comments: this.state.comments
         })
         this.props.history.push('/')

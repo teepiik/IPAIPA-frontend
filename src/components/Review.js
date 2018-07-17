@@ -18,9 +18,10 @@ class Review extends React.Component {
     // willMount wont re-render with async calls
     componentDidMount = async () => {
         const review = await this.getReviewById(this.props.reviewId)
-        const beer = await this.getbeerById(review.reviewedBeer)
+        const beer = await this.getBeerById(review.reviewedBeer)
         const user = await this.getUserById(review.userWhoViewed)
 
+        console.log(review)
         this.setState({
             review: review,
             beer: beer,
@@ -57,10 +58,18 @@ class Review extends React.Component {
         }
 
         return (
-            <div classname='review'>
-                <h3> Review title </h3>
+            <div className='review'>
+                <h3> Review of {this.state.review.reviewedBeerName}
+                    <p> made by <strong>{this.state.review.usernameOfReviewer}</strong></p>
+                </h3>
+                <div> <p>Review was given {this.state.review.date} </p> </div>
+                <p>Overall grade: {this.state.review.overall_grade}</p>
+                <p>First bite: {this.state.review.first_bite}</p>
+                <p>After taste: {this.state.review.after_taste}</p>
+                <em>Comments: {this.state.review.comments}</em>
 
-                <div> <Link to={`/beers/${this.state.review.id}`}>beer name</Link></div>
+                <div>Link to the reviewed beer
+                <p><Link to={`/beers/${this.state.review.reviewedBeer}`}>{this.state.review.reviewedBeerName}</Link></p></div>
             </div>
         )
 

@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import BeerListing from './components/BeerListing'
 import UserListing from './components/UserListing'
 import Userpage from './components/Userpage'
+import Review from './components/Review'
 import LoginPage from './components/LoginPage'
 import { Link } from 'react-router-dom'
 import EditBeerForm from './components/EditBeerForm';
@@ -156,6 +157,9 @@ class App extends React.Component {
 
             <Route exact path="/users" render={() => <UserListing users={this.state.users} />} />
             <Route exact path="/users/:id" render={({ match, history }) => <Userpage userId={match.params.id} history={history} />} />
+
+            <Route exact path="/reviews/:id" render={({ match, history }) => <Review reviewId={match.params.id} history={history} />} />
+
           </div>
         </Router>
       </div>
