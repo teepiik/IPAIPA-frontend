@@ -7,3 +7,20 @@
     padding: 10px;
     margin-bottom: 10px;
   }
+
+  .backgroundBase {
+    background-image: url("./Images/raindrops.jpg");
+    background-size: cover;
+    height: 1000px;
+  }
+
+  .beersListing {
+    background-image: none;
+  }
+
+  h2.beersListing {
+    font-weight: bold;
+    font-size: 40px;
+    color: darkorange;
+    text-shadow: 2px 2px 8px #FF0000;
+  }

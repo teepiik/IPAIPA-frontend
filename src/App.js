@@ -22,20 +22,13 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      beers: [],/*
-      newBeerName: '',
-      newBeerType: '',
-      newBeerCountry: '',
-      newBeerPercent: '',
-      newBeerBrewery: '',*/
+      beers: [],
       error: '',
       message: '',
       user: null,
       users: []
     }
   }
-
-  // States tuskin tarvii tässä newBeerParametrei enää?
 
   componentDidMount = async () => {
     const getBeers = await beerService.getAll()
@@ -139,7 +132,7 @@ class App extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className='backgroundBase'>
         <Router>
           <div className="container">
             <Menu logout={this.handleLogout} user={this.state.user} />

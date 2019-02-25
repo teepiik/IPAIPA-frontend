@@ -5,8 +5,8 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap'
 const BeerListing = (props) => {
 
     return (
-        <div>
-            <h2>Beers</h2>
+        <div className='beersListing'>
+            <h2 className='beersListing'>Beers</h2>
             <ListGroup>
                 {props.beers.map(beer => beer === undefined ? null :
                     <ListGroupItem key={beer.id}>
