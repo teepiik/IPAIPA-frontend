@@ -18,9 +18,16 @@
     background-image: none;
   }
 
-  h2.beersListing {
+  h2.header {
     font-weight: bold;
     font-size: 40px;
+    color: darkorange;
+    text-shadow: 2px 2px 8px #FF0000;
+  }
+
+  h1.header {
+    font-weight: bold;
+    font-size: 60px;
     color: darkorange;
     text-shadow: 2px 2px 8px #FF0000;
   }

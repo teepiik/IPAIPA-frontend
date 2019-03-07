@@ -38,7 +38,7 @@ class LoginPage extends React.Component {
     render() {
         return (
             <div>
-                <h2>Login</h2>
+                <h2 className='header'>Login</h2>
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <div>

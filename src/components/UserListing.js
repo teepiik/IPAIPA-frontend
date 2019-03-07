@@ -6,7 +6,7 @@ const UserListing = (props) => {
 
     return (
         <div>
-            <h2>Users</h2>
+            <h2 className='header'>Users</h2>
             <ListGroup>
                 {props.users.map(user => user === undefined ? null :
                     <ListGroupItem key={user.id}>

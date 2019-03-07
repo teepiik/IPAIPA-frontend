@@ -6,7 +6,7 @@ const BeerListing = (props) => {
 
     return (
         <div className='beersListing'>
-            <h2 className='beersListing'>Beers</h2>
+            <h2 className='header'>Beers</h2>
             <ListGroup>
                 {props.beers.map(beer => beer === undefined ? null :
                     <ListGroupItem key={beer.id}>
